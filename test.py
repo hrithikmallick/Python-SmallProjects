@@ -39,6 +39,13 @@ def view():
             return [name, accNo, password, balance]
 
 
+def upAcc(name, accNum, passwd, balance):
+    balance = str(balance)
+    with open('account.txt', 'w') as f:
+        f.write(name + ' | ' + accNum +
+                ' | ' + passwd+' | '+balance)
+
+
 file_exists = os.path.exists('account.txt')
 # print(file_exists)
 
@@ -54,10 +61,40 @@ if file_exists == False:
 if file_exists == True:
     data = view()
     name, accNo, passw, balance = data
+    balance = float(balance)
     print("Hello", name, "\n")
     usAccno = input("Please give your Account No:- ")
     usPassw = input("Please give your Account Password No:- ")
     if accNo == usAccno and passw == usPassw:
         print("Welcome", name, "\n")
+        while True:
+            opt = input(
+                "1.Check Balance \n2.Withdrawl \n3.Deposite \n4.Exit  \nEnter Your Choice:- ")
+            if opt == "1":
+                print("\n\tYour balance is :-", balance, "₹")
+            elif opt == "2":
+                mon = float(
+                    input("Enter the Amount You want to Withdrawl::- "))
+                if mon > 0:
+                    if balance > mon:
+                        balance = balance-mon
+                        upAcc(name, accNo, passw, balance)
+                    else:
+                        print("\n\tnot enough money ")
+                else:
+                    print("Please Enter in positive....!!!! ")
+            elif opt == "3":
+                mon = float(
+                    input("Enter the Amount You want to Deposite::- "))
+                if mon > 0:
+                    if balance > mon:
+                        balance = balance+mon
+                        upAcc(name, accNo, passw, balance)
+            elif opt == "4":
+                break
+            else:
+                print("Wrong input")
+
     else:
         print("Invalid credintial")
+        exit()
