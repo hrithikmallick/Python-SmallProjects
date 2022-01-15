@@ -17,9 +17,17 @@ def add():
     name = input('Enter Your name:- ')
     accNum = genAcc()
     passwd = input('Enter password:- ')
+    balance = 0.0
+    try:
+        balance = float(input("Give your first deposite:- "))
+    except:
+        print("invalid input")
+        balance = float(input("Give your first deposite:- "))
+
+    balance = str(balance)
     with open('account.txt', 'a') as f:
         f.write(name + ' | ' + accNum +
-                ' | ' + passwd + "\n")
+                ' | ' + passwd+' | '+balance)
     return accNum
 
 
@@ -27,8 +35,8 @@ def view():
     with open('account.txt', 'r') as f:
         for line in f.readlines():
             data = line.rstrip()
-            name, accNo, password = data.split(' | ')
-            return [name, accNo, password]
+            name, accNo, password, balance = data.split(' | ')
+            return [name, accNo, password, balance]
 
 
 file_exists = os.path.exists('account.txt')
@@ -45,7 +53,7 @@ if file_exists == False:
         exit()
 if file_exists == True:
     data = view()
-    name, accNo, passw = data
+    name, accNo, passw, balance = data
     print("Hello", name, "\n")
     usAccno = input("Please give your Account No:- ")
     usPassw = input("Please give your Account Password No:- ")
