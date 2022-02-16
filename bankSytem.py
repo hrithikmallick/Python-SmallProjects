@@ -97,7 +97,7 @@ if accNo == usAccno and passw == usPassw:
                 mon = float(
                     input("Enter the Amount You want to Deposite::- "))
                 if mon > 0:
-                    if balance > mon:
+                    if balance > 0:
                         balance = balance+mon
                         upAcc(name, accNo, passw, balance)
                     else:
